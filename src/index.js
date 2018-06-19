@@ -10,6 +10,18 @@ import Reducer from './Reducers/index';
 
 let store = createStore(Reducer);
 
-ReactDOM.render(<App store = {store}/>, document.getElementById('root'));
-registerServiceWorker();
+function render(){
+	ReactDOM.render(
+		<div className = "container">
+			<App store = {store}/>
+		</div>,
+		document.getElementById("root"));
+}
 
+store.subscribe(() => {
+	console.log("STATE CHANGE");
+	console.log(store.getState());
+});
+
+store.subscribe(render); //must always call back
+render();
