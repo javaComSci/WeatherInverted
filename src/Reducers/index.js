@@ -21,11 +21,31 @@ const getTuesdayData = () => {
 	let city = 'portland';
 	let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city},us&appid=${apiKey}`
 
+	let allMinTemp = [];
+	let allMaxTemp = [];
+	let mainWeather = [];
+
 	request(url, function(err, response, body){
 		if(err){
 			console.log('error: ', err);
 		}else{
 			console.log('body: ', body);
+			console.log("\n\n\n\n");
+			let weather = JSON.parse(body);
+			for(let i = 0; i < 40; i+=8){
+				let data = weather.list.slice(i, i+8);
+				let minData = Math.min(...data.map(d => d.main.temp_min));
+				let maxData = Math.max(...data.map(d => d.main.temp_max));
+				allMinTemp.push(parseInt(1.8 * (minData - 273)));
+				allMaxTemp.push(parseInt(1.8 * (maxData - 273)));
+				let commonWeather = {};
+				let weatherStatus = data.map(d => d.weather[0].main);
+				console.log(weatherStatus);
+				commonWeather = weatherStatus.forEach(val => ((commonWeather[val]) ? commonWeather[val] +=  1 : commonWeather[val] = 1));
+				console.log(commonWeather);
+			}
+			console.log(allMinTemp);
+			console.log(allMaxTemp);
 		}
 	})
 

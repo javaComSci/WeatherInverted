@@ -31,8 +31,7 @@ export default class Card extends React.Component{
 			display = 
 			<img 
 			src = "https://upload.wikimedia.org/wikipedia/commons/d/d4/Cloud%2C_blue_background.svg"
-
-			style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; width: 40%; border-radius: 5px;"                        v vcccc
+			style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; width: 40%; border-radius: 5px;"
 			alt ="Clouds"/>
 		}
 
