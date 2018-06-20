@@ -22,11 +22,28 @@ export default class Card extends React.Component{
 	}
 
 	render(){
+		let information = this.showInfo();
+		let low = information[0];
+		let high = information[1];
+		let pic = information[2];
+		let display;
+		if(pic == "cloudy"){
+			display = 
+			<img 
+			src = "https://upload.wikimedia.org/wikipedia/commons/d/d4/Cloud%2C_blue_background.svg"
+
+			style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s; width: 40%; border-radius: 5px;"                        v vcccc
+			alt ="Clouds"/>
+		}
+
+
 		return (
 			<div> 
-				LOW: {this.showInfo()[0]}
+				LOW: {low}
 				<br />
-				HIGH: {this.showInfo()[1]}
+				HIGH: {high}
+				PIC: {pic}
+				{display}
 			</div>
 		);
 	}

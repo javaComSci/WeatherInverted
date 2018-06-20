@@ -15,24 +15,41 @@ const defaultState = {
 	sunChecked: false,
 }
 
+const getTuesdayData = () => {
+	let request = require('request');
+	let apiKey = '3bec72de36769f47d439e4d00ed850e9';
+	let city = 'portland';
+	let url = `http://api.openweathermap.org/data/2.5/forecast?q=${city},us&appid=${apiKey}`
+
+	request(url, function(err, response, body){
+		if(err){
+			console.log('error: ', err);
+		}else{
+			console.log('body: ', body);
+		}
+	})
+
+}
+
 export default (state = defaultState,action) => {
 	console.log(action);
 	switch(action.type){
 		case 'MONDAY':
 			console.log(state);
-			return Object.assign({}, state, {monday: [30,40], monChecked: !state.monChecked});
+			return Object.assign({}, state, {monday: [30,40,"cloudy"], monChecked: !state.monChecked});
 		case 'TUESDAY':
-			return Object.assign({}, state, {tuesday: [30,40], tuesChecked: !state.tuesChecked});
+			getTuesdayData();
+			return Object.assign({}, state, {tuesday: [10,50, "rainy"], tuesChecked: !state.tuesChecked});
 		case 'WEDNESDAY':
-			return Object.assign({}, state, {wednesday: [30,40], wedChecked: !state.wedChecked});
+			return Object.assign({}, state, {wednesday: [30,45, "sunny"], wedChecked: !state.wedChecked});
 		case 'THRUSDAY':
-			return Object.assign({}, state, {thrusday: [30,40], thursChecked: !state.thursChecked});
+			return Object.assign({}, state, {thrusday: [20,30, "snowy"], thursChecked: !state.thursChecked});
 		case 'FRIDAY':
-			return Object.assign({}, state, {friday: [30,40], friChecked: !state.friChecked});
+			return Object.assign({}, state, {friday: [30,40, "thunder"], friChecked: !state.friChecked});
 		case 'SATURDAY':
-			return Object.assign({}, state, {saturday: [30,40], satChecked: !state.satChecked});
+			return Object.assign({}, state, {saturday: [50,60, "sunny"], satChecked: !state.satChecked});
 		case 'SUNDAY':
-			return Object.assign({}, state, {sunday: [30,40], sunChecked: !state.sunChecked});
+			return Object.assign({}, state, {sunday: [70,80, "cloudy"], sunChecked: !state.sunChecked});
 		default:
 			return state;
 	}
