@@ -62,12 +62,12 @@ class Days extends React.Component{
 			case 10: "November"; break;
 			case 11: "December"; break;
 		}
-		
+
 		return d.getMonth() + " " + d.getDate();
 	}
 	render(){
 		return (
-			<div> 
+			<div>
 				<input id="checkBox" type="checkbox" onChange = {this.selectMonday} id = "mon"/> Monday {this.getDate(1)}
 				<input id="checkBox" type="checkbox" onChange= {this.selectTuesday} id = "tues"/> Tuesday {this.getDate(2)}
 				<input id="checkBox" type="checkbox" onChange = {this.selectWednesday} id = "wed"/> Wednesday {this.getDate(3)}

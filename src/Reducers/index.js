@@ -15,7 +15,7 @@ const defaultState = {
 	sunChecked: false,
 }
 
-const getTuesdayData = () => {
+const getData = () => {
 	let request = require('request');
 	let apiKey = '3bec72de36769f47d439e4d00ed850e9';
 	let city = 'portland';
@@ -23,7 +23,6 @@ const getTuesdayData = () => {
 
 	let allMinTemp = [];
 	let allMaxTemp = [];
-	let mainWeather = [];
 
 	request(url, function(err, response, body){
 		if(err){
@@ -38,11 +37,12 @@ const getTuesdayData = () => {
 				let maxData = Math.max(...data.map(d => d.main.temp_max));
 				allMinTemp.push(parseInt(1.8 * (minData - 273)));
 				allMaxTemp.push(parseInt(1.8 * (maxData - 273)));
-				let commonWeather = {};
 				let weatherStatus = data.map(d => d.weather[0].main);
-				console.log(weatherStatus);
-				commonWeather = weatherStatus.forEach(val => ((commonWeather[val]) ? commonWeather[val] +=  1 : commonWeather[val] = 1));
-				console.log(commonWeather);
+				let commonWeather = {};
+				weatherStatus.forEach(val => ((commonWeather[val]) ? commonWeather[val] +=  1 : commonWeather[val] = 1));
+				console.log(Object.values(commonWeather));
+				let commonStatus = Math.max(...Object.values(commonWeather));
+				let filtered = Object.keys(commonWeather).filter(x => commonWeather[x] == commonStatus);
 			}
 			console.log(allMinTemp);
 			console.log(allMaxTemp);
@@ -53,23 +53,26 @@ const getTuesdayData = () => {
 
 export default (state = defaultState,action) => {
 	console.log(action);
+	getData();
 	switch(action.type){
 		case 'MONDAY':
 			console.log(state);
-			return Object.assign({}, state, {monday: [30,40,"cloudy"], monChecked: !state.monChecked});
+			return Object.assign({}, state, {monday: [30,40,"clouds"], monChecked: !state.monChecked});
 		case 'TUESDAY':
-			getTuesdayData();
-			return Object.assign({}, state, {tuesday: [10,50, "rainy"], tuesChecked: !state.tuesChecked});
+			return Object.assign({}, state, {tuesday: [10,50, "rain"], tuesChecked: !state.tuesChecked});
 		case 'WEDNESDAY':
 			return Object.assign({}, state, {wednesday: [30,45, "sunny"], wedChecked: !state.wedChecked});
 		case 'THRUSDAY':
-			return Object.assign({}, state, {thrusday: [20,30, "snowy"], thursChecked: !state.thursChecked});
+			return Object.assign({}, state, {thrusday: [20,30, "snow"], thursChecked: !state.thursChecked});
 		case 'FRIDAY':
 			return Object.assign({}, state, {friday: [30,40, "thunder"], friChecked: !state.friChecked});
 		case 'SATURDAY':
 			return Object.assign({}, state, {saturday: [50,60, "sunny"], satChecked: !state.satChecked});
 		case 'SUNDAY':
-			return Object.assign({}, state, {sunday: [70,80, "cloudy"], sunChecked: !state.sunChecked});
+			return Object.assign({}, state, {sunday: [70,80, "clouds"], sunChecked: !state.sunChecked});
+		case 'SUNNY':
+			console.log("SUNNY CHOSEN");
+			return state;
 		default:
 			return state;
 	}

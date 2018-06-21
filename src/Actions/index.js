@@ -39,3 +39,15 @@ export const chooseSunday = () => {
 		type: 'SUNDAY'
 	}
 }
+
+export const chooseSunny = () => {
+	return {
+		type: 'SUNNY'
+	}
+}
+
+export const chooseRain = () => {
+	return {
+		type: 'RAIN'
+	}
+}
