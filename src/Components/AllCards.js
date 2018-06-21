@@ -23,37 +23,37 @@ class AllCards extends React.Component{
 		let getMonday;
 		if(this.props.store.getState().monChecked){
 			console.log("GETTING MON INFO");
-			getMonday = <Card info = "monday" store = {this.props.store}/>
+			getMonday = <Card info = "Monday" store = {this.props.store}/>
 		}
 
 		let getTuesday;
 		if(this.props.store.getState().tuesChecked){
 			console.log("GETTING TUES INFO");
-			getTuesday = <Card info = "tuesday" store = {this.props.store}/>
+			getTuesday = <Card info = "Tuesday" store = {this.props.store}/>
 		}
 
 		let getWednesday;
 		if(this.props.store.getState().wedChecked){
 			console.log("GETTING WED INFO");
-			getWednesday = <Card info = "wednesday" store = {this.props.store}/>
+			getWednesday = <Card info = "Wednesday" store = {this.props.store}/>
 		}
 
 		let getThursday;
 		if(this.props.store.getState().thursChecked){
 			console.log("GETTING THURS INFO");
-			getThursday = <Card info = "thursday" store = {this.props.store}/>
+			getThursday = <Card info = "Thursday" store = {this.props.store}/>
 		}
 
 		let getFriday;
 		if(this.props.store.getState().friChecked){
 			console.log("GETTING FRI INFO");
-			getFriday = <Card info = "friday" store = {this.props.store}/>
+			getFriday = <Card info = "Friday" store = {this.props.store}/>
 		}
 
 		let getSaturday;
 		if(this.props.store.getState().satChecked){
 			console.log("GETTING SAT INFO");
-			getSaturday = <Card info = "saturday" store = {this.props.store}/>
+			getSaturday = <Card info = "Saturday" store = {this.props.store}/>
 		}
 
 		let getSunday;

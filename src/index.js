@@ -26,3 +26,4 @@ store.subscribe(() => {
 
 store.subscribe(render); //must always call back
 render();
+console.log("INITAL STATE " + store);

@@ -15,13 +15,13 @@ export default class Card extends React.Component{
 		console.log(this.props.store.getState());
 		console.log("MON CHECKED IS " + this.props.store.getState().monChecked);
 		switch(this.props.info){
-			case "monday": return this.store.getState().monday;
-			case "tuesday": return this.store.getState().tuesday;
-			case "wednesday": return this.store.getState().wednesday;
-			case "thursday": return this.store.getState().thursday;
-			case "friday": return this.store.getState().friday;
-			case "saturday": return this.store.getState().saturday;
-			case "sunday": return this.store.getState().sunday;
+			case "Monday": return this.store.getState().monday;
+			case "Tuesday": return this.store.getState().tuesday;
+			case "Wednesday": return this.store.getState().wednesday;
+			case "Thursday": return this.store.getState().thursday;
+			case "Friday": return this.store.getState().friday;
+			case "Saturday": return this.store.getState().saturday;
+			case "Sunday": return this.store.getState().sunday;
 		}
 	}
 
@@ -32,55 +32,28 @@ export default class Card extends React.Component{
 		let pic = information[2];
 		let display;
 
-		if(pic == "clouds"){
-			display = <div class="card">
-			  <img class ="singleCard" src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Cloud%2C_blue_background.svg" alt="cloudy"/>
-			  <div class="container">
-			    <h4><b>High: {high}</b></h4> 
-			    <h4><b>Low: {low}</b></h4> 
-			  </div>
-			</div>
-		}else if(pic == "rain"){
-			display = <div class="card">
-			  <img class ="singleCard" src="https://www.publicdomainpictures.net/en/view-image.php?image=71534&picture=rain-cloud-clipart" alt="rain"/>
-			  <div class="container">
-			    <h4><b>High: {high}</b></h4> 
-			    <h4><b>Low: {low}</b></h4> 
-			  </div>
-			</div>
-		}else if(pic == "clear"){
-			display = <div class="card">
-			  <img class ="singleCard" src="http://www.publicdomainfiles.com/show_file.php?id=13920112214859" alt="clear"/>
-			  <div class="container">
-			    <h4><b>High: {high}</b></h4> 
-			    <h4><b>Low: {low}</b></h4> 
-			  </div>
-			</div>
-		}else if(pic == "sunny"){
-			display = <div class="card">
-			  <img class ="singleCard" src="https://pixabay.com/en/sunshine-sun-heat-warmth-weather-151806/" alt="sunny"/>
-			  <div class="container">
-			    <h4><b>High: {high}</b></h4> 
-			    <h4><b>Low: {low}</b></h4> 
-			  </div>
-			</div>
-		}else if(pic == "snow"){
-			display = <div class="card">
-			  <img class ="singleCard" src="https://pixabay.com/en/cloudy-weather-snow-snowing-37012/" alt="snow"/>
-			  <div class="container">
-			    <h4><b>High: {high}</b></h4> 
-			    <h4><b>Low: {low}</b></h4> 
-			  </div>
-			</div>
-		}
+		console.log("INSIDE CARD RENDER\n\n\n " + information + "\n\n\n" + this.store.getState().thursday);
 
+		let url;
+		let alter;
+		switch(pic){
+			case "clouds": url = "https://upload.wikimedia.org/wikipedia/commons/d/d4/Cloud%2C_blue_background.svg"; alter = "cloudy"; break;
+			case "rain": url = "https://upload.wikimedia.org/wikipedia/commons/2/25/Rain01.svg"; alter = "rain"; break;
+			case "clear": url = "https://upload.wikimedia.org/wikipedia/commons/8/87/Sun02.svg"; alter = "clear"; break;
+			case "sunny": url = "https://upload.wikimedia.org/wikipedia/commons/0/02/Sun01.svg"; alter = "sunny"; break;
+			case "snow": url = "https://upload.wikimedia.org/wikipedia/commons/5/5d/Snowstorm.svg"; alter = "snow"; break;
+		}
+		display = <div className="card">
+			  <img className ="singleCard" src={url} alt = {alter}/>
+			  <div className="container">
+			  	<h4><b>{this.props.info}</b></h4>
+			    <h4>High: {high}</h4> 
+			    <h4>Low: {low}</h4> 
+			  </div>
+			</div>
 	
 		return (
-			<div> 
-				LOW: {low}
-				<br />
-				HIGH: {high}
-				PIC: {pic}
+			<div>
 				{display}
 			</div>
 		);

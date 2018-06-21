@@ -1,3 +1,24 @@
+const getDate = (curr) => {
+		var d = new Date();
+		d.setDate(d.getDate() + ((7-d.getDay())%7+curr) % 7);
+		let month;
+		switch(d.getMonth()){
+			case 0: month = "January"; break;
+			case 1: month = "Feburary"; break;
+			case 2: month ="March"; break;
+			case 3: month ="April"; break;
+			case 4: month ="May"; break;
+			case 5: month ="June"; break;
+			case 6: month ="July"; break;
+			case 7: month ="August"; break;
+			case 8: month ="September"; break;
+			case 9: month ="October"; break;
+			case 10: month ="November"; break;
+			case 11: month ="December"; break;
+		}
+	return month + " " + d.getDate();
+}
+
 const defaultState = {
 	monday: [10,20],
 	tuesday: [10,20],
@@ -13,7 +34,15 @@ const defaultState = {
 	friChecked: false,
 	satChecked: false,
 	sunChecked: false,
+	monDate: getDate(1),
+	tuesDate: getDate(2),
+	wedDate: getDate(3),
+	thursDate: getDate(4),
+	friDate: getDate(5),
+	satDate: getDate(6),
+	sunDate: getDate(0),
 }
+
 
 const getData = () => {
 	let request = require('request');
@@ -62,8 +91,8 @@ export default (state = defaultState,action) => {
 			return Object.assign({}, state, {tuesday: [10,50, "rain"], tuesChecked: !state.tuesChecked});
 		case 'WEDNESDAY':
 			return Object.assign({}, state, {wednesday: [30,45, "sunny"], wedChecked: !state.wedChecked});
-		case 'THRUSDAY':
-			return Object.assign({}, state, {thrusday: [20,30, "snow"], thursChecked: !state.thursChecked});
+		case 'THURSDAY':
+			return Object.assign({}, state, {thursday: [20,30, "sunny"], thursChecked: !state.thursChecked});
 		case 'FRIDAY':
 			return Object.assign({}, state, {friday: [30,40, "thunder"], friChecked: !state.friChecked});
 		case 'SATURDAY':
