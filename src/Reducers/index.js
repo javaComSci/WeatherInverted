@@ -41,6 +41,8 @@ const defaultState = {
 	friDate: getDate(5),
 	satDate: getDate(6),
 	sunDate: getDate(0),
+	chosenDestination: "",
+	chosenWeather: [],
 }
 
 
@@ -90,11 +92,11 @@ export default (state = defaultState,action) => {
 		case 'TUESDAY':
 			return Object.assign({}, state, {tuesday: [10,50, "rain"], tuesChecked: !state.tuesChecked});
 		case 'WEDNESDAY':
-			return Object.assign({}, state, {wednesday: [30,45, "sunny"], wedChecked: !state.wedChecked});
+			return Object.assign({}, state, {wednesday: [30,45, "clear"], wedChecked: !state.wedChecked});
 		case 'THURSDAY':
 			return Object.assign({}, state, {thursday: [20,30, "sunny"], thursChecked: !state.thursChecked});
 		case 'FRIDAY':
-			return Object.assign({}, state, {friday: [30,40, "thunder"], friChecked: !state.friChecked});
+			return Object.assign({}, state, {friday: [30,40, "rain"], friChecked: !state.friChecked});
 		case 'SATURDAY':
 			return Object.assign({}, state, {saturday: [50,60, "sunny"], satChecked: !state.satChecked});
 		case 'SUNDAY':
@@ -102,6 +104,20 @@ export default (state = defaultState,action) => {
 		case 'SUNNY':
 			console.log("SUNNY CHOSEN");
 			return state;
+		case 'CLOUDS':
+			return state;
+		case'CLEAR':
+			return state;
+		case 'RAIN':
+			return state;
+		case 'BEACH':
+			return Object.assign({}, state, {chosenDestination: "beach"});
+		case 'FOREST':
+			return Object.assign({}, state, {chosenDestination: "forest"});
+		case 'MALL':
+			return Object.assign({}, state, {chosenDestination: "mall"});
+		case 'MUSEUM':
+			return Object.assign({}, state, {chosenDestination: "museum"});
 		default:
 			return state;
 	}

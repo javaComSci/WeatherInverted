@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { chooseSunny, chooseRain } from '../Actions/index.js'
+import { chooseSunny, chooseRain,chooseClear, chooseClouds } from '../Actions/index.js'
 
 export default class WeatherWanted extends Component{
 	constructor(props){
@@ -17,12 +17,23 @@ export default class WeatherWanted extends Component{
 		this.store.dispatch(chooseRain());
 	}
 
+	selectClear(){
+		this.store.dispatch(chooseClear());
+	}
+
+	selectClouds(){
+		this.store.dispatch(chooseClouds());
+	}
+
 	render(){
 
 		return (
 			<div>
 				<input type="checkbox" onChange = {this.selectSunny}/> Sunny
 				<input type="checkbox" onChange = {this.selectRain}/> Rain
+				<input type="checkbox" onChange = {this.selectClear}/> Clear
+				<input type="checkbox" onChange = {this.selectClouds}/> Clouds
+
 			</div>
 		);
 	}

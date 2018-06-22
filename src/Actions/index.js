@@ -51,3 +51,39 @@ export const chooseRain = () => {
 		type: 'RAIN'
 	}
 }
+
+export const chooseClear = () => {
+	return {
+		type: 'CLEAR'
+	}
+}
+
+export const chooseClouds = () => {
+	return {
+		type: 'CLOUDS'
+	}
+}
+
+export const chooseBeach = () => {
+	return {
+		type: 'BEACH'
+	}
+}
+
+export const chooseForest = () => {
+	return {
+		type: 'FOREST'
+	}
+}
+
+export const chooseMall = () => {
+	return {
+		type: 'MALL'
+	}
+}
+
+export const chooseMuseum = () => {
+	return {
+		type: 'MUSEUM'
+	}
+}
