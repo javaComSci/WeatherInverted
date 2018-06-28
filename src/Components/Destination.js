@@ -1,5 +1,5 @@
 import React from 'react';
-import { chooseBeach, chooseForest, chooseMall, chooseMuseum } from '../Actions/index.js'
+import { chooseBeach, chooseForest, chooseMall, chooseMuseum, chooseLocation } from '../Actions/index.js'
 
 export default class Destination extends React.Component{
 	constructor(props){
@@ -19,6 +19,7 @@ export default class Destination extends React.Component{
 		}
 	}
 
+
 	render(){
 		return (
 			<div>
@@ -29,6 +30,7 @@ export default class Destination extends React.Component{
 										  <option value="mall">Mall</option>
 										  <option value="museum">Museum</option>
 									</select>
+			<br/>
 			</div>
 		);
 	}

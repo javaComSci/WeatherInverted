@@ -87,3 +87,9 @@ export const chooseMuseum = () => {
 		type: 'MUSEUM'
 	}
 }
+
+export const chooseLocation = (value) => {
+	return {
+		type: value
+	};
+}

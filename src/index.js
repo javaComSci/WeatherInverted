@@ -6,10 +6,10 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import { createStore } from 'redux';
-import Reducer from './Reducers/index';
+import combined from './Reducers/index';
 
 
-let store = createStore(Reducer);
+let store = createStore(combined);
 
 function render(){
 	ReactDOM.render(

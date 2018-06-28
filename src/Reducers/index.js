@@ -41,12 +41,16 @@ const defaultState = {
 	friDate: getDate(5),
 	satDate: getDate(6),
 	sunDate: getDate(0),
-	chosenDestination: "",
-	chosenWeather: [],
+	chosenDestination: '',
+	chosenWeather: '',
+	chosenLocation: '',
+	dataRecieved: '',
 }
 
 
-const getData = () => {
+const getData = (action) => {
+	console.log("PREVIOUSLY CHOSEN LOCATION IS " + action + "\n\n\n\n\n");
+	let beachCities = []
 	let request = require('request');
 	let apiKey = '3bec72de36769f47d439e4d00ed850e9';
 	let city = 'portland';
@@ -82,9 +86,13 @@ const getData = () => {
 
 }
 
-export default (state = defaultState,action) => {
-	console.log(action);
-	getData();
+function combined(state = defaultState, action){
+	console.log("ACTION RECIEVED IS " + action.type + "\n\n\n\n");
+	var dataRecievedLocal;
+	if((action.type == 'northwest' || action.type == 'midwest' || action.type == 'west' || action.type == 'south') && (action.type != state.chosenLocation)){
+		dataRecievedLocal = getData();
+	}
+	getData(action.type);
 	switch(action.type){
 		case 'MONDAY':
 			console.log(state);
@@ -118,7 +126,17 @@ export default (state = defaultState,action) => {
 			return Object.assign({}, state, {chosenDestination: "mall"});
 		case 'MUSEUM':
 			return Object.assign({}, state, {chosenDestination: "museum"});
+		case 'northeast':
+			return Object.assign({}, state, {chosenLocation: "northest"}, {dataRecieved: dataRecievedLocal});
+		case 'midwest':
+			return Object.assign({}, state, {chosenLocation: "midwest"}, {dataRecieved: dataRecievedLocal});
+		case 'west':
+			return Object.assign({}, state, {chosenLocation: "west"}, {dataRecieved: dataRecievedLocal});
+		case 'south':
+			return Object.assign({}, state, {chosenLocation: "south"}, {dataRecieved: dataRecievedLocal});
 		default:
 			return state;
 	}
 }
+
+export default combined;
