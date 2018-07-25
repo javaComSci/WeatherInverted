@@ -25,10 +25,10 @@ class App extends Component {
     return (
       <div className="App">
         <Location store = {this.props.store}/>
+        <Destination store = {this.props.store}/>
         <Days store = {this.props.store}/>
         <WeatherWanted store = {this.props.store}/>
         <AllCards store = {this.props.store}/>
-        <Destination store = {this.props.store}/>
       </div>
     );
   }

@@ -50,7 +50,7 @@ const defaultState = {
 
 const getData = (action) => {
 	console.log("PREVIOUSLY CHOSEN LOCATION IS " + action + "\n\n\n\n\n");
-	let beachCities = []
+	
 	let request = require('request');
 	let apiKey = '3bec72de36769f47d439e4d00ed850e9';
 	let city = 'portland';
@@ -89,8 +89,17 @@ const getData = (action) => {
 function combined(state = defaultState, action){
 	console.log("ACTION RECIEVED IS " + action.type + "\n\n\n\n");
 	var dataRecievedLocal;
-	if((action.type == 'northwest' || action.type == 'midwest' || action.type == 'west' || action.type == 'south') && (action.type != state.chosenLocation)){
-		dataRecievedLocal = getData();
+	switch(action.type){
+		case 'northeast':
+		case 'midwest'
+		case 'south':
+		case 'east':
+		case 'BEACH':
+		case 'MUSEUM':
+		case 'MALL':
+		case 'FOREST': dataRecievedLocal = getData();
+					   break;
+		default: break;
 	}
 	getData(action.type);
 	switch(action.type){
@@ -119,15 +128,15 @@ function combined(state = defaultState, action){
 		case 'RAIN':
 			return state;
 		case 'BEACH':
-			return Object.assign({}, state, {chosenDestination: "beach"});
+			return Object.assign({}, state, {chosenDestination: "beach"}, {dataRecieved: dataRecievedLocal});
 		case 'FOREST':
-			return Object.assign({}, state, {chosenDestination: "forest"});
+			return Object.assign({}, state, {chosenDestination: "forest"}, {dataRecieved: dataRecievedLocal});
 		case 'MALL':
-			return Object.assign({}, state, {chosenDestination: "mall"});
+			return Object.assign({}, state, {chosenDestination: "mall"}, {dataRecieved: dataRecievedLocal});
 		case 'MUSEUM':
-			return Object.assign({}, state, {chosenDestination: "museum"});
+			return Object.assign({}, state, {chosenDestination: "museum"},{dataRecieved: dataRecievedLocal});
 		case 'northeast':
-			return Object.assign({}, state, {chosenLocation: "northest"}, {dataRecieved: dataRecievedLocal});
+			return Object.assign({}, state, {chosenLocation: "northeast"}, {dataRecieved: dataRecievedLocal});
 		case 'midwest':
 			return Object.assign({}, state, {chosenLocation: "midwest"}, {dataRecieved: dataRecievedLocal});
 		case 'west':
