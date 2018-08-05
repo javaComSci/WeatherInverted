@@ -1,70 +1,59 @@
-import React from 'react';
-import Days from './Days';
+import React, { Component } from 'react';
 import Card from './Card';
 
-class AllCards extends React.Component{
+export default class AllCards extends Component {
 	constructor(props){
 		super(props);
-		this.store = this.props.store;
 	}
 
-	funcy() {
-      console.log("FUNCY");
-      console.log(this.props.store.getState());
-      console.log(this.props.store.getState().monChecked);
-      if(this.props.store.getState().monChecked ){
-      	console.log("CHECKED MODN")
-      	return 4;
-      }
-      return 1;
-    }
-
 	render(){
+		let getAll;
+		let allDays = this.props.store.getState().days;
+
+		if(allDays.Monday || allDays.Tuesday || allDays.Wednesday || allDays.Friday || allDays.Saturday || allDays.Sunday){
+			getAll = false;
+		}else{
+			getAll = true;
+		}
+
 		let getMonday;
-		if(this.props.store.getState().monChecked){
-			console.log("GETTING MON INFO");
-			getMonday = <Card info = "Monday" store = {this.props.store}/>
+		if(allDays.Monday || getAll){
+			getMonday = <Card getAll = {getAll} place = {this.props.place} info = "Monday" store = {this.props.store} data = {this.props.data.Monday}/>;
 		}
 
 		let getTuesday;
-		if(this.props.store.getState().tuesChecked){
-			console.log("GETTING TUES INFO");
-			getTuesday = <Card info = "Tuesday" store = {this.props.store}/>
+		if(allDays.Tuesday || getAll){
+			getTuesday = <Card getAll = {getAll}place = {this.props.place} info = "Tuesday" store = {this.props.store} data = {this.props.data.Tuesday}/>
 		}
 
 		let getWednesday;
-		if(this.props.store.getState().wedChecked){
-			console.log("GETTING WED INFO");
-			getWednesday = <Card info = "Wednesday" store = {this.props.store}/>
+		if(allDays.Wednesday || getAll){
+			getWednesday = <Card getAll = {getAll} place = {this.props.place} info = "Wednesday" store = {this.props.store} data = {this.props.data.Wednesday}/>
 		}
 
 		let getThursday;
-		if(this.props.store.getState().thursChecked){
-			console.log("GETTING THURS INFO");
-			getThursday = <Card info = "Thursday" store = {this.props.store}/>
+		if(allDays.Thursday || getAll){
+			getThursday = <Card getAll = {getAll} place = {this.props.place} info = "Thursday" store = {this.props.store} data = {this.props.data.Thursday}/>
 		}
 
 		let getFriday;
-		if(this.props.store.getState().friChecked){
-			console.log("GETTING FRI INFO");
-			getFriday = <Card info = "Friday" store = {this.props.store}/>
+		if(allDays.Friday || getAll){
+			getFriday = <Card getAll = {getAll} place = {this.props.place} info = "Friday" store = {this.props.store} data = {this.props.data.Friday}/>
 		}
 
 		let getSaturday;
-		if(this.props.store.getState().satChecked){
-			console.log("GETTING SAT INFO");
-			getSaturday = <Card info = "Saturday" store = {this.props.store}/>
+		if(allDays.Saturday || getAll){
+			getSaturday = <Card getAll = {getAll} place = {this.props.place} info = "Saturday" store = {this.props.store} data = {this.props.data.Saturday}/>
 		}
 
 		let getSunday;
-		if(this.props.store.getState().sunChecked){
-			console.log("GETTING SUN INFO");
-			getSunday = <Card info = "sunday" store = {this.props.store}/>
+		if(allDays.Sunday || getAll){
+			getSunday = <Card getAll = {getAll} place = {this.props.place} info = "Sunday" store = {this.props.store} data = {this.props.data.Sunday}/>
 		}
 
-
 		return (
-			<div>Does it work?
+			<div>
+				<h3> {this.props.place} </h3>
 				{getMonday}
 				{getTuesday}
 				{getWednesday}
@@ -72,10 +61,7 @@ class AllCards extends React.Component{
 				{getFriday}
 				{getSaturday}
 				{getSunday}
-				After get cards
 			</div>
 		);
 	}
 }
-
-export default AllCards;

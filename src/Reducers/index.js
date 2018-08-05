@@ -19,37 +19,122 @@ const getDate = (curr) => {
 	return month + " " + d.getDate();
 }
 
-const defaultState = {
-	monday: [10,20],
-	tuesday: [10,20],
-	wednesday: [10,20],
-	thursday: [10,20],
-	friday: [10,20],
-	saturday: [10,20],
-	sunday: [10,20],
-	monChecked: false,
-	tuesChecked: false,
-	wedChecked: false,
-	thursChecked: false,
-	friChecked: false,
-	satChecked: false,
-	sunChecked: false,
-	monDate: getDate(1),
-	tuesDate: getDate(2),
-	wedDate: getDate(3),
-	thursDate: getDate(4),
-	friDate: getDate(5),
-	satDate: getDate(6),
-	sunDate: getDate(0),
-	chosenDestination: '',
-	chosenWeather: '',
-	chosenLocation: '',
-	dataRecieved: '',
+
+const getDays = (state, newDay) => {
+	let newDays;
+	if (newDay == 'Monday'){
+		newDays = state.days.Monday ? {...state.days, Monday:undefined} : {...state.days, Monday:true};
+	} else if (newDay == 'Tuesday'){
+		newDays = state.days.Tuesday ? {...state.days, Tuesday:undefined} : {...state.days, Tuesday:true};
+	} else if (newDay == 'Wednesday'){
+		newDays = state.days.Wednesday ? {...state.days, Wednesday:undefined} : {...state.days, Wednesday:true};
+	} else if (newDay == 'Thursday'){
+		newDays = state.days.Thursday ? {...state.days, Thursday:undefined} : {...state.days, Thursday:true};
+	} else if (newDay == 'Friday'){
+		newDays = state.days.Friday ? {...state.days, Friday:undefined} : {...state.days, Friday:true};
+	} else if (newDay == 'Saturday'){
+		newDays = state.days.Saturday ? {...state.days, Saturday:undefined} : {...state.days, Saturday:true};
+	} else if (newDay == 'Sunday'){
+		newDays = state.days.Sunday ? {...state.days, Sunday:undefined} : {...state.days, Sunday:true};
+	}
+	return {...state, days: newDays};
 }
 
-
-const getData = (action) => {
-	console.log("PREVIOUSLY CHOSEN LOCATION IS " + action + "\n\n\n\n\n");
+const getWeather = (state, newWeather) => {
+	let newWeathers;
+	if (newWeather == 'Sunny'){
+		newWeathers = state.weather.Sunny ? {...state.weather, Sunny:undefined} : {...state.weather, Sunny:true};
+	} else if (newWeather == 'Rain'){
+		newWeathers = state.weather.Rain  ? {...state.weather, Rain:undefined} : {...state.weather, Rain:true};
+	} else if (newWeather == 'Clear'){
+		newWeathers = state.weather.Clear ? {...state.weather, Clear:undefined} : {...state.weather, Clear:true};
+	} else if (newWeather == 'Clouds'){
+		newWeathers = state.weather.Clouds ? {...state.weather, Clouds:undefined} : {...state.weather, Clouds:true};
+	} else if (newWeather == 'Drizzle'){
+		newWeathers = state.weather.Drizzle ? {...state.weather, Drizzle:undefined} : {...state.weather, Drizzle:true};
+	}
+	return {...state, weather: newWeathers};
+}
+const stubData = {
+	Place1: {
+		name: 'PLACE1',
+		Monday: {
+			Max: 78,
+			Min: 34,
+			Weather: 'Sunny',
+		},
+		Tuesday: {
+			Max: 80,
+			Min: 35,
+			Weather: 'Clouds',
+		},
+		Wednesday: {
+			Max: 78,
+			Min: 34,
+			Weather: 'Rain',
+		},
+		Thursday: {
+			Max: 78,
+			Min: 34,
+			Weather: 'Drizzle',
+		},
+		Friday: {
+			Max: 78,
+			Min: 34,
+			Weather: 'Rain',
+		},
+		Saturday: {
+			Max: 78,
+			Min: 34,
+			Weather: 'Clouds',
+		},
+		Sunday: {
+			Max: 78,
+			Min: 34,
+			Weather: 'Rain',
+		},
+	},
+	Place2: {
+		name: 'PLACE2',
+		Monday: {
+			Max: 68,
+			Min: 30,
+			Weather: 'Sunny',
+		},
+		Tuesday: {
+			Max: 68,
+			Min: 30,
+			Weather: 'Clouds',
+		},
+		Wednesday: {
+			Max: 68,
+			Min: 34,
+			Weather: 'Rain',
+		},
+		Thursday: {
+			Max: 68,
+			Min: 34,
+			Weather: 'Drizzle',
+		},
+		Friday: {
+			Max: 68,
+			Min: 34,
+			Weather: 'Sunny',
+		},
+		Saturday: {
+			Max: 68,
+			Min: 34,
+			Weather: 'Clouds',
+		},
+		Sunday: {
+			Max: 68,
+			Min: 34,
+			Weather: 'Rain',
+		},
+	},
+};
+const getData = (location, destination) => {
+	return stubData;
 	
 	let request = require('request');
 	let apiKey = '3bec72de36769f47d439e4d00ed850e9';
@@ -83,69 +168,37 @@ const getData = (action) => {
 			console.log(allMaxTemp);
 		}
 	})
-
 }
 
-function combined(state = defaultState, action){
-	console.log("ACTION RECIEVED IS " + action.type + "\n\n\n\n");
-	var dataRecievedLocal;
+const defaultState = {
+	monDate: getDate(1),
+	tuesDate: getDate(2),
+	wedDate: getDate(3),
+	thursDate: getDate(4),
+	friDate: getDate(5),
+	satDate: getDate(6),
+	sunDate: getDate(0),
+	days:{},
+	weather:{}
+};
+
+export default (state = defaultState, action) => {
+	console.log(state);
+	console.log(action.payload);
 	switch(action.type){
-		case 'northeast':
-		case 'midwest'
-		case 'south':
-		case 'east':
-		case 'BEACH':
-		case 'MUSEUM':
-		case 'MALL':
-		case 'FOREST': dataRecievedLocal = getData();
-					   break;
-		default: break;
-	}
-	getData(action.type);
-	switch(action.type){
-		case 'MONDAY':
-			console.log(state);
-			return Object.assign({}, state, {monday: [30,40,"clouds"], monChecked: !state.monChecked});
-		case 'TUESDAY':
-			return Object.assign({}, state, {tuesday: [10,50, "rain"], tuesChecked: !state.tuesChecked});
-		case 'WEDNESDAY':
-			return Object.assign({}, state, {wednesday: [30,45, "clear"], wedChecked: !state.wedChecked});
-		case 'THURSDAY':
-			return Object.assign({}, state, {thursday: [20,30, "sunny"], thursChecked: !state.thursChecked});
-		case 'FRIDAY':
-			return Object.assign({}, state, {friday: [30,40, "rain"], friChecked: !state.friChecked});
-		case 'SATURDAY':
-			return Object.assign({}, state, {saturday: [50,60, "sunny"], satChecked: !state.satChecked});
-		case 'SUNDAY':
-			return Object.assign({}, state, {sunday: [70,80, "clouds"], sunChecked: !state.sunChecked});
-		case 'SUNNY':
-			console.log("SUNNY CHOSEN");
-			return state;
-		case 'CLOUDS':
-			return state;
-		case'CLEAR':
-			return state;
-		case 'RAIN':
-			return state;
-		case 'BEACH':
-			return Object.assign({}, state, {chosenDestination: "beach"}, {dataRecieved: dataRecievedLocal});
-		case 'FOREST':
-			return Object.assign({}, state, {chosenDestination: "forest"}, {dataRecieved: dataRecievedLocal});
-		case 'MALL':
-			return Object.assign({}, state, {chosenDestination: "mall"}, {dataRecieved: dataRecievedLocal});
-		case 'MUSEUM':
-			return Object.assign({}, state, {chosenDestination: "museum"},{dataRecieved: dataRecievedLocal});
-		case 'northeast':
-			return Object.assign({}, state, {chosenLocation: "northeast"}, {dataRecieved: dataRecievedLocal});
-		case 'midwest':
-			return Object.assign({}, state, {chosenLocation: "midwest"}, {dataRecieved: dataRecievedLocal});
-		case 'west':
-			return Object.assign({}, state, {chosenLocation: "west"}, {dataRecieved: dataRecievedLocal});
-		case 'south':
-			return Object.assign({}, state, {chosenLocation: "south"}, {dataRecieved: dataRecievedLocal});
-		default:
-			return state;
+		case 'LOCATION': if(action.payload && state.destination && state.location != action.payload){
+							let data = getData(action.payload, state.destination);
+							return {...state, location: action.payload, data};
+						 }
+						 return {...state, location: action.payload};
+		case 'DESTINATION': if(state.location && action.payload && state.destination != action.payload){
+								let data = getData(state.location, action.payload);
+								return {...state, destination: action.payload, data};
+						    }
+						    return {...state, destination: action.payload};
+		case 'DAY': return getDays(state, action.payload);
+		case 'WEATHER': return getWeather(state, action.payload);
+		default: return state;
 	}
 }
 
-export default combined;

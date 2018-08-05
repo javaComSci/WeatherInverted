@@ -1,37 +1,30 @@
-import React from 'react';
-import { chooseBeach, chooseForest, chooseMall, chooseMuseum, chooseLocation } from '../Actions/index.js'
+import React, { Component } from 'react';
+import { chooseDestination } from '../Actions/index';
 
-export default class Destination extends React.Component{
+export default class Destination extends Component {
 	constructor(props){
 		super(props);
-		this.store = this.props.store;
-	}
-	
-
-	optionHandler = () => {
-		let value = document.getElementById("search").value;
-		switch(value){
-			case "beach": this.store.dispatch(chooseBeach()); break;
-			case "forest": this.store.dispatch(chooseForest()); break;
-			case "mall": this.store.dispatch(chooseMall()); break;
-			case "museum": this.store.dispatch(chooseMuseum()); break;
-			default: this.store.dispatch(chooseBeach()); break;
-		}
 	}
 
+	disabledStyle = {
+		display: 'none',
+	};
 
+
+	destinationOptionHandler = (e) => {
+		this.props.store.dispatch(chooseDestination(e.target.value));
+	}
 	render(){
-		return (
-			<div>
-			THE ALREADY CHOSEN IS: {this.store.getState().chosenDestination}
-			Choose destination type: <select id = "search" onChange = {this.optionHandler}>
+
+		return (<div>
+			Choose destination type: <select id = "search" onChange = {this.destinationOptionHandler}>
+										<option selected disabled hidden style={this.disabledStyle}> </option>
 										  <option value="beach">Beach</option>
 										  <option value="forest">Forest</option>
 										  <option value="mall">Mall</option>
 										  <option value="museum">Museum</option>
 									</select>
 			<br/>
-			</div>
-		);
+		</div>);
 	}
-} 
+}

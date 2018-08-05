@@ -1,41 +1,22 @@
 import React, { Component } from 'react';
-import { chooseSunny, chooseRain,chooseClear, chooseClouds } from '../Actions/index.js'
+import { chooseWeather } from '../Actions/index';
 
-export default class WeatherWanted extends Component{
+export default class WeatherWanted extends Component {
 	constructor(props){
 		super(props);
-		this.store = this.props.store;
-		this.selectSunny = this.selectSunny.bind(this);
-		this.selectRain = this.selectRain.bind(this);
 	}
 
-	selectSunny(){
-		this.store.dispatch(chooseSunny());
-	}
-
-	selectRain(){
-		this.store.dispatch(chooseRain());
-	}
-
-	selectClear(){
-		this.store.dispatch(chooseClear());
-	}
-
-	selectClouds(){
-		this.store.dispatch(chooseClouds());
+	selectWeatherHandler = (e) => {
+		this.props.store.dispatch(chooseWeather(e.target.value));
 	}
 
 	render(){
-
-		return (
-			<div>
-				<input type="checkbox" onChange = {this.selectSunny}/> Sunny
-				<input type="checkbox" onChange = {this.selectRain}/> Rain
-				<input type="checkbox" onChange = {this.selectClear}/> Clear
-				<input type="checkbox" onChange = {this.selectClouds}/> Clouds
-
-			</div>
-		);
+		return <div> 
+				<input type="checkbox" value = "Sunny" onChange = {this.selectWeatherHandler}/> Sunny
+				<input type="checkbox" value = "Rain" onChange = {this.selectWeatherHandler}/> Rain
+				<input type="checkbox" value = "Clear" onChange = {this.selectWeatherHandler}/> Clear
+				<input type="checkbox" value = "Clouds" onChange = {this.selectWeatherHandler}/> Clouds
+				<input type="checkbox" value = "Drizzle" onChange = {this.selectWeatherHandler}/> Drizzle
+		</div>
 	}
 }
-
