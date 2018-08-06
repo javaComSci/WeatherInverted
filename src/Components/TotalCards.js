@@ -23,10 +23,10 @@ export default class TotalCards extends Component {
 				place3 = <AllCards store = {this.props.store} place = "Place3" data = {this.props.store.getState().data.Place3}/>
 			}
 			if(this.props.store.getState().data.Place4){
-				place3 = <AllCards store = {this.props.store} place = "Place4" data = {this.props.store.getState().data.Place4}/>
+				place4 = <AllCards store = {this.props.store} place = "Place4" data = {this.props.store.getState().data.Place4}/>
 			}
 			if(this.props.store.getState().data.Place5){
-				place3 = <AllCards store = {this.props.store} place = "Place5" data = {this.props.store.getState().data.Place5}/>
+				place5 = <AllCards store = {this.props.store} place = "Place5" data = {this.props.store.getState().data.Place5}/>
 			}
 		}
 		return <div>
