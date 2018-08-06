@@ -21,8 +21,8 @@ export default class Destination extends Component {
 										<option selected disabled hidden style={this.disabledStyle}> </option>
 										  <option value="beach">Beach</option>
 										  <option value="forest">Forest</option>
-										  <option value="mall">Mall</option>
-										  <option value="museum">Museum</option>
+										  <option value="park">Park</option>
+										  <option value="building">Building</option>
 									</select>
 			<br/>
 		</div>);
