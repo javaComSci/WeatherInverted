@@ -7,8 +7,7 @@
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-scripts": "1.1.4",
-    "redux": "^4.0.0",
-    "request": "^2.87.0"
+    "redux": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -17,6 +16,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "request": "^2.87.0",
     "style-loader": "^0.21.0"
   }
 }

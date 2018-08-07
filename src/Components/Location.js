@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { chooseLocation } from '../Actions/index';
+import { chooseLocation, putData } from '../Actions/index';
 import './DestinationLocation.css';
+import { getData } from '../Reducers/index';
 
 export default class Location extends Component {
 	constructor(props){
@@ -13,6 +14,9 @@ export default class Location extends Component {
 
 	optionLocationDispatch = (e) => {
 		this.props.store.dispatch(chooseLocation(e.target.value));
+		if(this.props.store.getState().destination && this.props.store.getState().location != e.target.value){
+			getData(e.target.value, this.props.store.getState().destination).then(response => this.props.store.dispatch(putData(response)));
+		}
 	}
 
 	render(){

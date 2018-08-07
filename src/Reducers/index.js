@@ -178,89 +178,67 @@ const dayToInt = (d) => {
 }
 
 const getData = (location, destination) => {
+	console.log("Calling getData");
 	let dataBody = {};
 	let request = require('request');
 	let apiKey = '3bec72de36769f47d439e4d00ed850e9';
 	let cities = locationAndDestinations[location][destination];
+	let allPromises = [];
+	for(let city in cities) {
+		let zipcode = cities[city];
+		let url = `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode},us&appid=${apiKey}`;
+		allPromises.push(new Promise((resolve, reject) => {
+			request(url, function(err, response, body){
+				body = JSON.parse(body);
+				console.log(body);
+				body ? resolve({city, body}) : reject("Error recieving data" + err);
+			});
+		})); 
+	}
+	console.log("after getting the data");
+	console.log(allPromises);
+	return Promise.all(allPromises);
+}
+
+const parseData = (allData) => {
+	let dataBody = {};
 	let placeCount = 1;
 	let currentPlace;
-	for(var city in cities) {
-		currentPlace = "Place" + placeCount;
+	for(let j = 0; j < allData.length; j++){
+		currentPlace = "Place"+placeCount;
 		placeCount++;
-		dataBody[currentPlace] = {};
-		dataBody[currentPlace]['name'] = city;
-		let zipcode = cities[city];
-		// let url = `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}`;
-		let url = `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode},us&appid=${apiKey}`
-		request(url, function(err, response, body){
-			if(err) {
-				console.log('error: ', err);
-				console.log("ERROR ABOVE!\n\n\n");
-				throw new Error('ERROR FROM API RESPONSE');
-			} else {
-				console.log('body: ', body);
-				console.log("\n\n\n\n");
-				let weather = JSON.parse(body);
-				let minTemps = [];
-				let maxTemps = [];
-				let weathers = [];
-				for(let i = 0; i < 40; i+=8){
-					let data = weather.list.slice(i, i+8);
-					let minTempForDay = data.map(d => d.main.temp_min);
-					let maxTempForDay = data.map(d => d.main.temp_max);
-					minTemps.push(parseInt(1.8*(Math.min(...minTempForDay) - 273)));
-					maxTemps.push(parseInt(1.8*(Math.max(...maxTempForDay) - 273)));
-					let statuses = data.map(d => d.weather[0].main);
-					let allStatus = {};
-					statuses.forEach(s => allStatus[s] ? allStatus[s]= allStatus[s] + 1 : allStatus[s] = 1);
-					let maxCount = Math.max(...Object.values(allStatus));
-					let commonWeather = Object.keys(allStatus).filter(x => allStatus[x] == maxCount);
-					weathers.push(commonWeather[0]);
-					console.log(data);
-				}
-				let currentDate = new Date();
-				let currentDay = currentDate.getDay();
-				for(let i = 0; i < 7; i++){
-					dataBody[currentPlace][intToDay((currentDay+i)%7)] = {};
-					dataBody[currentPlace][intToDay((currentDay+i)%7)]['Min'] = minTemps[i] || 'No data';
-					dataBody[currentPlace][intToDay((currentDay+i)%7)]['Max'] = maxTemps[i] || 'No data';
-					dataBody[currentPlace][intToDay((currentDay+i)%7)]['Weather'] = weathers[i] || 'No data';
-				}
-			}
-		});
+		dataBody[currentPlace] = {}
+		dataBody[currentPlace]['name'] = allData[j]['city'];
+		let minTemps = [];
+		let maxTemps = [];
+		let weathers = [];
+		let currentData = allData[j]['body'];
+		for(let i = 0; i < 40; i+=8){
+			let data = currentData.list.slice(i, i+8);
+			let minTempForDay = data.map(d => d.main.temp_min);
+			let maxTempForDay = data.map(d => d.main.temp_max);
+			minTemps.push(parseInt(1.8*(Math.min(...minTempForDay) - 273)));
+			maxTemps.push(parseInt(1.8*(Math.max(...maxTempForDay) - 273)));
+			let statuses = data.map(d => d.weather[0].main);
+			let allStatus = {};
+			statuses.forEach(s => allStatus[s] ? allStatus[s]= allStatus[s] + 1 : allStatus[s] = 1);
+			let maxCount = Math.max(...Object.values(allStatus));
+			let commonWeather = Object.keys(allStatus).filter(x => allStatus[x] == maxCount);
+			weathers.push(commonWeather[0]);
+			console.log(data);
+		}
+		let currentDate = new Date();
+		let currentDay = currentDate.getDay();
+		for(let i = 0; i < 7; i++){
+			console.log("in the loop");
+			dataBody[currentPlace][intToDay((currentDay+i)%7)] = {};
+			dataBody[currentPlace][intToDay((currentDay+i)%7)]['Min'] = minTemps[i] || 'No data';
+			dataBody[currentPlace][intToDay((currentDay+i)%7)]['Max'] = maxTemps[i] || 'No data';
+			dataBody[currentPlace][intToDay((currentDay+i)%7)]['Weather'] = weathers[i] || 'No data';
+		}
 	}
-
-	console.log(stubData);
 	console.log(dataBody);
 	return dataBody;
-
-	// let allMinTemp = [];
-	// let allMaxTemp = [];
-
-	// request(url, function(err, response, body){
-	// 	if(err){
-	// 		console.log('error: ', err);
-	// 	}else{
-	// 		console.log('body: ', body);
-	// 		console.log("\n\n\n\n");
-	// 		let weather = JSON.parse(body);
-	// 		for(let i = 0; i < 40; i+=8){
-	// 			let data = weather.list.slice(i, i+8);
-	// 			let minData = Math.min(...data.map(d => d.main.temp_min));
-	// 			let maxData = Math.max(...data.map(d => d.main.temp_max));
-	// 			allMinTemp.push(parseInt(1.8 * (minData - 273)));
-	// 			allMaxTemp.push(parseInt(1.8 * (maxData - 273)));
-	// 			let weatherStatus = data.map(d => d.weather[0].main);
-	// 			let commonWeather = {};
-	// 			weatherStatus.forEach(val => ((commonWeather[val]) ? commonWeather[val] +=  1 : commonWeather[val] = 1));
-	// 			console.log(Object.values(commonWeather));
-	// 			let commonStatus = Math.max(...Object.values(commonWeather));
-	// 			let filtered = Object.keys(commonWeather).filter(x => commonWeather[x] == commonStatus);
-	// 		}
-	// 		console.log(allMinTemp);
-	// 		console.log(allMaxTemp);
-	// 	}
-	// })
 }
 
 const defaultState = {
@@ -275,23 +253,18 @@ const defaultState = {
 	weather:{}
 };
 
-export default (state = defaultState, action) => {
+const combined = (state = defaultState, action) => {
 	console.log(state);
 	console.log(action.payload);
 	switch(action.type){
-		case 'LOCATION': if(action.payload && state.destination && state.location != action.payload){
-							let data = getData(action.payload, state.destination);
-							return {...state, location: action.payload, data};
-						 }
-						 return {...state, location: action.payload};
-		case 'DESTINATION': if(state.location && action.payload && state.destination != action.payload){
-								let data = getData(state.location, action.payload);
-								return {...state, destination: action.payload, data};
-						    }
-						    return {...state, destination: action.payload};
+		case 'DESTINATION': return {...state, destination: action.payload};
+		case 'LOCATION': return {...state, location: action.payload};
+		case 'DATA': let data = parseData(action.payload); return {...state, data}; 
 		case 'DAY': return getDays(state, action.payload);
 		case 'WEATHER': return getWeather(state, action.payload);
 		default: return state;
 	}
 }
+
+export { combined, getData };
 

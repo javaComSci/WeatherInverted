@@ -6,7 +6,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import { createStore } from 'redux';
-import combined from './Reducers/index';
+import { combined } from './Reducers/index';
 
 
 let store = createStore(combined);

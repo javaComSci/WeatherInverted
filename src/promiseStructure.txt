@@ -1,0 +1,26 @@
+getData = (cities) => {
+  let promises = [];
+  for (let city in cities) {
+    promises.push(a new promise for a specific city);
+  }
+
+  return Promise.all(promises);
+  // return Promise.all([promise for san diego, promise for chicago, ...])
+};
+
+getData(...).then((results) => {
+  // results -> [dataBody<san diego>, dataBody<chicago>, ...]
+  // process results (which is an array) into a single dataBody object
+  let dataBody = process(results);
+
+  dispatch({event: 'DEAL-WITH-LOCATION-DATA', data: dataBody});
+};
+
+a new promise for a specific city:
+new Promise((resolve, reject) => {
+    request(url, function(err, response, body) {
+      // process
+
+      resolve(dataBody);
+    });
+  }

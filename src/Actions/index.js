@@ -25,3 +25,10 @@ export const chooseLocation = (value) => {
 		payload: value,
 	};
 }
+
+export const putData = (value) => {
+	return {
+		type: 'DATA',
+		payload: value,
+	}
+}

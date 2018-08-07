@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { chooseDestination } from '../Actions/index';
+import { chooseDestination, putData } from '../Actions/index';
 import './DestinationLocation.css';
+import { getData } from '../Reducers/index';
 
 export default class Destination extends Component {
 	constructor(props){
@@ -14,7 +15,14 @@ export default class Destination extends Component {
 
 	destinationOptionHandler = (e) => {
 		this.props.store.dispatch(chooseDestination(e.target.value));
+		if(this.props.store.getState().location && this.props.store.getState().location != e.target.value){
+			getData(this.props.store.getState().location, e.target.value).then(response => {
+				console.log(response);
+				this.props.store.dispatch(putData(response));
+			});
+		}
 	}
+
 	render(){
 		return (<div>
 			<h3 className="headerStyle">Choose destination type: </h3><select onChange={this.destinationOptionHandler} className="dropdownStyle">
