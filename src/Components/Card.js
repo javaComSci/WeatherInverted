@@ -41,13 +41,14 @@ export default class Card extends Component {
 				case "Sunny": url = "https://upload.wikimedia.org/wikipedia/commons/0/02/Sun01.svg"; alter = "sunny"; break;
 				case "Drizzle": url = "https://upload.wikimedia.org/wikipedia/commons/2/25/Rain01.svg"; alter = "drizzle"; break;
 				case "Snow": url = "https://upload.wikimedia.org/wikipedia/commons/5/5d/Snowstorm.svg"; alter = "snow"; break;
+				default: url = "https://www.publicdomainpictures.net/pictures/130000/velka/white-box-background.jpg"; alter = "nothing"; break;
 			}
 			return (<div className="card">
 					  <img className ="singleCard" src={url} alt = {alter}/>
-					  <div className="container">
+					  <div className="infoContainer">
 					  	<h4><b>{this.props.info}</b></h4>
-					    <h4>High: {high}</h4> 
-					    <h4>Low: {low}</h4> 
+					    <h5>High: {high}</h5> 
+					    <h5>Low: {low}</h5> 
 					  </div>
 					</div>);
 		}

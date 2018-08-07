@@ -6,11 +6,15 @@ export default class AllCards extends Component {
 		super(props);
 	}
 
+	allCardsStyle = {
+		display: "inline",
+	};
+
 	render(){
 		let getAll;
 		let allDays = this.props.store.getState().days;
 
-		if(allDays.Monday || allDays.Tuesday || allDays.Wednesday || allDays.Friday || allDays.Saturday || allDays.Sunday){
+		if(allDays.Monday || allDays.Tuesday || allDays.Wednesday || allDays.Thursday || allDays.Friday || allDays.Saturday || allDays.Sunday){
 			getAll = false;
 		}else{
 			getAll = true;
@@ -33,6 +37,7 @@ export default class AllCards extends Component {
 
 		let getThursday;
 		if(allDays.Thursday || getAll){
+			console.log("supposed to get thrus\n\n\n\n\n")
 			getThursday = <Card getAll = {getAll} place = {this.props.place} info = "Thursday" store = {this.props.store} data = {this.props.data.Thursday}/>
 		}
 
@@ -54,13 +59,15 @@ export default class AllCards extends Component {
 		return (
 			<div>
 				<h3> {this.props.place} </h3>
-				{getMonday}
-				{getTuesday}
-				{getWednesday}
-				{getThursday}
-				{getFriday}
-				{getSaturday}
-				{getSunday}
+				<div style = {this.allCardsStyle}>
+					{getMonday}
+					{getTuesday}
+					{getWednesday}
+					{getThursday}
+					{getFriday}
+					{getSaturday}
+					{getSunday}
+				</div>
 			</div>
 		);
 	}

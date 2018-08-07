@@ -184,39 +184,50 @@ const getData = (location, destination) => {
 	let cities = locationAndDestinations[location][destination];
 	let placeCount = 1;
 	let currentPlace;
-	for(var city in cities){
+	for(var city in cities) {
 		currentPlace = "Place" + placeCount;
 		placeCount++;
 		dataBody[currentPlace] = {};
 		dataBody[currentPlace]['name'] = city;
 		let zipcode = cities[city];
 		// let url = `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}`;
-		let weather = stubBody;
-		let minTemps = [];
-		let maxTemps = [];
-		let weathers = [];
-		for(let i = 0; i < 40; i+=8){
-			let data = weather.list.slice(i, i+8);
-			let minTempForDay = data.map(d => d.main.temp_min);
-			let maxTempForDay = data.map(d => d.main.temp_max);
-			minTemps.push(parseInt(1.8*(Math.min(...minTempForDay) - 273)));
-			maxTemps.push(parseInt(1.8*(Math.max(...maxTempForDay) - 273)));
-			let statuses = data.map(d => d.weather[0].main);
-			let allStatus = {};
-			statuses.forEach(s => allStatus[s] ? allStatus[s]= allStatus[s] + 1 : allStatus[s] = 1);
-			let maxCount = Math.max(...Object.values(allStatus));
-			let commonWeather = Object.keys(allStatus).filter(x => allStatus[x] == maxCount);
-			weathers.push(commonWeather[0]);
-			console.log(data);
-		}
-		let currentDate = new Date();
-		let currentDay = currentDate.getDay();
-		for(let i = 0; i < 7; i++){
-			dataBody[currentPlace][intToDay(currentDay+i)] = {};
-			dataBody[currentPlace][intToDay(currentDay+i)]['Min'] = minTemps[i] || 'Not enough data';
-			dataBody[currentPlace][intToDay(currentDay+i)]['Max'] = maxTemps[i] || 'Not enough data';
-			dataBody[currentPlace][intToDay(currentDay+i)]['Weather'] = weathers[i] || 'Not enough data';
-		}
+		let url = `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode},us&appid=${apiKey}`
+		request(url, function(err, response, body){
+			if(err) {
+				console.log('error: ', err);
+				console.log("ERROR ABOVE!\n\n\n");
+				throw new Error('ERROR FROM API RESPONSE');
+			} else {
+				console.log('body: ', body);
+				console.log("\n\n\n\n");
+				let weather = JSON.parse(body);
+				let minTemps = [];
+				let maxTemps = [];
+				let weathers = [];
+				for(let i = 0; i < 40; i+=8){
+					let data = weather.list.slice(i, i+8);
+					let minTempForDay = data.map(d => d.main.temp_min);
+					let maxTempForDay = data.map(d => d.main.temp_max);
+					minTemps.push(parseInt(1.8*(Math.min(...minTempForDay) - 273)));
+					maxTemps.push(parseInt(1.8*(Math.max(...maxTempForDay) - 273)));
+					let statuses = data.map(d => d.weather[0].main);
+					let allStatus = {};
+					statuses.forEach(s => allStatus[s] ? allStatus[s]= allStatus[s] + 1 : allStatus[s] = 1);
+					let maxCount = Math.max(...Object.values(allStatus));
+					let commonWeather = Object.keys(allStatus).filter(x => allStatus[x] == maxCount);
+					weathers.push(commonWeather[0]);
+					console.log(data);
+				}
+				let currentDate = new Date();
+				let currentDay = currentDate.getDay();
+				for(let i = 0; i < 7; i++){
+					dataBody[currentPlace][intToDay((currentDay+i)%7)] = {};
+					dataBody[currentPlace][intToDay((currentDay+i)%7)]['Min'] = minTemps[i] || 'No data';
+					dataBody[currentPlace][intToDay((currentDay+i)%7)]['Max'] = maxTemps[i] || 'No data';
+					dataBody[currentPlace][intToDay((currentDay+i)%7)]['Weather'] = weathers[i] || 'No data';
+				}
+			}
+		});
 	}
 
 	console.log(stubData);

@@ -10,13 +10,19 @@ export default class WeatherWanted extends Component {
 		this.props.store.dispatch(chooseWeather(e.target.value));
 	}
 
+	inputStyle = {
+		color: "black",
+		display: "inline",
+	};
+
 	render(){
 		return <div> 
-				<input type="checkbox" value = "Sunny" onChange = {this.selectWeatherHandler}/> Sunny
-				<input type="checkbox" value = "Rain" onChange = {this.selectWeatherHandler}/> Rain
-				<input type="checkbox" value = "Clear" onChange = {this.selectWeatherHandler}/> Clear
-				<input type="checkbox" value = "Clouds" onChange = {this.selectWeatherHandler}/> Clouds
-				<input type="checkbox" value = "Drizzle" onChange = {this.selectWeatherHandler}/> Drizzle
+				<br/>
+				<input type="checkbox" value = "Sunny" onChange = {this.selectWeatherHandler}/> <h4 style={this.inputStyle}> Sunny </h4>
+				<input type="checkbox" value = "Rain" onChange = {this.selectWeatherHandler}/> <h4 style={this.inputStyle}> Rain </h4>
+				<input type="checkbox" value = "Clear" onChange = {this.selectWeatherHandler}/> <h4 style={this.inputStyle}> Clear </h4>
+				<input type="checkbox" value = "Clouds" onChange = {this.selectWeatherHandler}/> <h4 style={this.inputStyle}> Clouds </h4>
+				<input type="checkbox" value = "Drizzle" onChange = {this.selectWeatherHandler}/> <h4 style={this.inputStyle}> Drizzle </h4>
 		</div>
 	}
 }

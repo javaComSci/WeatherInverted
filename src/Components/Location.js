@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { chooseLocation } from '../Actions/index';
+import './DestinationLocation.css';
 
 export default class Location extends Component {
 	constructor(props){
@@ -16,7 +17,7 @@ export default class Location extends Component {
 
 	render(){
 		return (<div>
-			Choose location interested: <select id = "searchLoc" onChange = {this.optionLocationDispatch}>
+			<h3 className="headerStyle">Choose location interested: </h3><select id="searchLoc" onChange={this.optionLocationDispatch} className="dropdownStyle">
 										  <option selected disabled hidden style={this.disabledStyle}> </option>
 										  <option value="northeast">Northeast</option>
 										  <option value="midwest">Midwest</option>

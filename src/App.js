@@ -15,13 +15,15 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div className="App">
-        <Location store = {this.props.store}/>
-        <Destination store = {this.props.store}/>
-        <Days store = {this.props.store}/>
-        <WeatherWanted store = {this.props.store}/>
+        <div className = "Inputs">
+          <h2> Choose your desired destination and weather type to find places that match your desired weather! </h2>
+          <Location store = {this.props.store}/>
+          <Destination store = {this.props.store}/>
+          <Days store = {this.props.store}/>
+          <WeatherWanted store = {this.props.store}/>
+        </div>
         <TotalCards store = {this.props.store}/>
       </div>
     );
