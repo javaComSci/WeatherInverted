@@ -58,7 +58,7 @@ export default class AllCards extends Component {
 
 		return (
 			<div>
-				<h3> {this.props.place} </h3>
+				<h3> {this.props.data.name} </h3>
 				<div style = {this.allCardsStyle}>
 					{getMonday}
 					{getTuesday}

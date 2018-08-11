@@ -13,8 +13,13 @@ export default class Location extends Component {
 	};
 
 	optionLocationDispatch = (e) => {
+		let prevLocation = this.props.store.getState().location;
 		this.props.store.dispatch(chooseLocation(e.target.value));
-		if(this.props.store.getState().destination && this.props.store.getState().location != e.target.value){
+		console.log("dispatch option location");
+		console.log(prevLocation);
+		console.log(e.target.value);
+		if(this.props.store.getState().destination && prevLocation != e.target.value){
+			console.log("destination changed")
 			getData(e.target.value, this.props.store.getState().destination).then(response => this.props.store.dispatch(putData(response)));
 		}
 	}

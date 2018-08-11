@@ -14,8 +14,9 @@ export default class Destination extends Component {
 
 
 	destinationOptionHandler = (e) => {
+		let prevDestination = this.props.store.getState().destination;
 		this.props.store.dispatch(chooseDestination(e.target.value));
-		if(this.props.store.getState().location && this.props.store.getState().location != e.target.value){
+		if(this.props.store.getState().location && this.prevDestination != e.target.value){
 			getData(this.props.store.getState().location, e.target.value).then(response => {
 				console.log(response);
 				this.props.store.dispatch(putData(response));
