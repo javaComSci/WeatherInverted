@@ -245,7 +245,7 @@ const getData = (location, destination) => {
 	console.log("Calling getData");
 	let dataBody = {};
 	let request = require('request');
-	let apiKey = '3bec72de36769f47d439e4d00ed850e9';
+	let apiKey = '******************';
 	let cities = locationAndDestinations[location][destination];
 	let allPromises = [];
 	for(let city in cities) {
